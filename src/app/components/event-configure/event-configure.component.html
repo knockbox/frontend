@@ -1,0 +1,22 @@
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
+
+  <!-- Containers -->
+  <div formArrayName="containers">
+
+    <!-- Container -->
+    <div *ngFor="let container of containers.controls; let i = index">
+      <div [formGroupName]="i">
+        <label for="image">DockerHub Image</label>
+        <input type="text" id="image" formControlName="image">
+        <button (click)="removeContainer(i)" *ngIf="containers.controls.length > 1">Remove Container</button>
+      </div>
+    </div>
+
+    <div>
+      <button (click)="addContainer()">Add Container</button>
+    </div>
+
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
