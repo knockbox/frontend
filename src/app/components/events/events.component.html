@@ -1,1 +1,18 @@
-<p>events works!</p>
+<div>
+  <a [routerLink]="['create']">Create Event</a>
+</div>
+<div *ngIf="events">
+  <ul>
+    <li *ngFor="let event of events" class="border">
+      <ul>
+        <li>{{event.activity_id}}</li>
+        <li>{{event.name}}</li>
+        <li>{{event.starts_at}}</li>
+        <li>{{event.ends_at}}</li>
+        <li>Private: {{event.private}}</li>
+        <a [routerLink]="[event.activity_id]">View</a>
+<!--        <a [routerLink]="['events', event.activity_id]" *ngIf="!event.private">Join</a>-->
+      </ul>
+    </li>
+  </ul>
+</div>
