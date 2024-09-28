@@ -1,1 +1,10 @@
-<p>event-details works!</p>
+<div *ngIf="event">
+  <ul class="border">
+    <li>{{ event.activity_id }}</li>
+    <li>{{ event.name }}</li>
+    <li>{{ event.starts_at }}</li>
+    <li>{{ event.ends_at }}</li>
+    <li>Private: {{ event.private }}</li>
+    <a href="events">Back</a>
+  </ul>
+</div>

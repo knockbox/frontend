@@ -18,4 +18,13 @@ export class EventsService {
     const endpoint = `${environment.matchboxApiUrl}/events`;
     return this.http.get<EventResponse[]>(endpoint);
   }
+
+  /**
+   * Returns a single Event.
+   * @param activity_id
+   */
+  getEvent(activity_id: string): Observable<EventResponse> {
+    const endpoint = `${environment.matchboxApiUrl}/events/${activity_id}`;
+    return this.http.get<EventResponse>(endpoint);
+  }
 }
