@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
 import {EventsService} from "../../services/events.service";
 import {EventResponse} from "../../lib/responses";
 import {NgForOf, NgIf} from "@angular/common";
 import {AuthService} from "../../services/auth.service";
 import {ErrorHandler} from "../../lib/errors";
+import {FlagDetailsComponent} from "../flag-details/flag-details.component";
 
 @Component({
   selector: 'app-event-details',
@@ -12,7 +13,9 @@ import {ErrorHandler} from "../../lib/errors";
   imports: [
     NgForOf,
     NgIf,
-    RouterLink
+    RouterLink,
+    FlagDetailsComponent,
+    RouterOutlet
   ],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.scss'

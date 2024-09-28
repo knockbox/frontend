@@ -10,3 +10,5 @@
     <a [routerLink]="['configure']" *ngIf="isEventOrganizer()">Configure</a>
   </ul>
 </div>
+
+<app-flag-details *ngIf="event && isEventOrganizer()" [event]="event"></app-flag-details>

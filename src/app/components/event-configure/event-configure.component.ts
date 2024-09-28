@@ -8,6 +8,7 @@ import {AuthService} from "../../services/auth.service";
 import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {EventConfigureInput} from "../../lib/inputs";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FlagDetailsComponent} from "../flag-details/flag-details.component";
 
 @Component({
   selector: 'app-event-configure',
@@ -17,7 +18,8 @@ import {HttpErrorResponse} from "@angular/common/http";
     ReactiveFormsModule,
     NgForOf,
     JsonPipe,
-    RouterLink
+    RouterLink,
+    FlagDetailsComponent
   ],
   templateUrl: './event-configure.component.html',
   styleUrl: './event-configure.component.scss'
@@ -48,11 +50,6 @@ export class EventConfigureComponent implements OnInit {
 
   private onEventSuccess(event: EventResponse): void {
     this.event = event;
-
-    if (!this.isEventOrganizer(event)) {
-      this.router.navigate(['events', event.activity_id])
-      return
-    }
 
     this.form = this.fb.group({
       containers: this.fb.array([this.createContainer()])

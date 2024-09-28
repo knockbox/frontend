@@ -15,3 +15,9 @@ export interface EventResponse {
   image_tag: string;
   private: boolean;
 }
+
+export interface FlagResponse {
+  flag_id: string;
+  difficulty: string;
+  env_var: string;
+}

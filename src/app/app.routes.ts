@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {IndexComponent} from "./components/index/index.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {EventsComponent} from "./components/events/events.component";
@@ -7,6 +7,8 @@ import {tokenGuard} from "./guards/token.guard";
 import {EventCreateComponent} from "./components/event-create/event-create.component";
 import {EventDetailsComponent} from "./components/event-details/event-details.component";
 import {EventConfigureComponent} from "./components/event-configure/event-configure.component";
+import {organizerGuard} from "./guards/organizer.guard";
+import {FlagDetailsComponent} from "./components/flag-details/flag-details.component";
 
 export const routes: Routes = [
   {
@@ -46,6 +48,6 @@ export const routes: Routes = [
     title: "Event Configuration",
     path: "events/:event_id/configure",
     component: EventConfigureComponent,
-    canActivate: [tokenGuard],
+    canActivate: [tokenGuard, organizerGuard]
   },
 ];

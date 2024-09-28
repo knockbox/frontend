@@ -1,0 +1,77 @@
+<div class="p-4 flex flex-col gap-y-2">
+  <h2 class="text-2xl">Event Flags</h2>
+
+  <!-- Flag Create -->
+  <form [formGroup]="createForm" class="flex gap-x-2">
+    <!-- Difficulty -->
+    <label for="difficulty_create">Difficulty</label>
+    <select formControlName="difficulty" id="difficulty_create">
+      <option value="very_easy">Very Easy</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+      <option value="very_hard">Very Hard</option>
+    </select>
+
+    <!-- Env Var -->
+    <label for="env_var_create">Env Var</label>
+    <input type="text" id="env_var_create" formControlName="env_var">
+
+    <div class="flex gap-x-2">
+      <button (click)="createFlag()" [disabled]="!createForm.valid">Create</button>
+      <button type="reset">Reset</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <!-- Existing Flags -->
+  <form [formGroup]="form" *ngIf="form" class="flex">
+
+    <!-- Flags -->
+    <div formArrayName="flags">
+
+      <!-- Flag -->
+      <div *ngFor="let flag of formFlags.controls; let i = index">
+        <div [formGroupName]="i" class="flex gap-x-2">
+          <!-- Difficulty -->
+          <label for="difficulty">Difficulty</label>
+          <select formControlName="difficulty" id="difficulty">
+            <option value="very_easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+            <option value="very_hard">Very Hard</option>
+          </select>
+
+          <!-- Env Var -->
+          <label for="env_var">Env Var</label>
+          <input [type]="getFlagDisplay(i)" id="env_var" formControlName="env_var">
+
+          <!-- Edit Group -->
+          <div class="flex gap-x-2">
+            <button type="button" (click)="toggleFlagHidden(i)" *ngIf="!isFlagEditing(i)">Toggle</button>
+
+            <button type="button" (click)="toggleFlagEdit(i)" *ngIf="!isFlagEditing(i)">
+              Edit
+            </button>
+
+            <div *ngIf="isFlagEditing(i)" class="flex gap-x-2">
+              <button type="button" (click)="toggleFlagEdit(i)" >
+                Cancel
+              </button>
+              <button type="button" (click)="saveFlagEdit(i)">
+                Save
+              </button>
+            </div>
+
+            <button type="button" (click)="deleteFlag(i)" *ngIf="isFlagEditing(i)">Delete</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+</div>

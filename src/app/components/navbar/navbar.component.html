@@ -20,6 +20,9 @@
 
     <!-- Logged In -->
     <ul *ngIf="authService.isLoggedIn | async">
+      <li>
+        {{authService.getUsername()}}
+      </li>
         <li>
             <a href="" (click)="onLogout()">Logout</a>
         </li>

@@ -49,3 +49,10 @@ export interface EventConfigureContainerVolume {
   read_only: boolean;
   source: string;
 }
+
+export interface FlagCreateInput {
+  difficulty: string;
+  env_var: string;
+}
+
+export interface FlagUpdateInput extends FlagCreateInput {}
