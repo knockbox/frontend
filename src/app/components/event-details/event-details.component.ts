@@ -3,6 +3,8 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
 import {EventsService} from "../../services/events.service";
 import {EventResponse} from "../../lib/responses";
 import {NgForOf, NgIf} from "@angular/common";
+import {AuthService} from "../../services/auth.service";
+import {ErrorHandler} from "../../lib/errors";
 
 @Component({
   selector: 'app-event-details',
@@ -18,9 +20,9 @@ import {NgForOf, NgIf} from "@angular/common";
 export class EventDetailsComponent implements OnInit {
   event?: EventResponse
 
-
   constructor(
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private eventsService: EventsService
   ) {
   }
@@ -38,7 +40,13 @@ export class EventDetailsComponent implements OnInit {
   }
 
   private onEventError(err: Error): void {
-    console.log(err);
-    alert("Failed to get all events");
+    new ErrorHandler(this.authService).processErrorResponse(err);
+  }
+
+  /**
+   * Determine if the viewer is the organizer.
+   */
+  isEventOrganizer(): boolean {
+    return this.event?.organizer_id == this.authService.getAccountId()
   }
 }

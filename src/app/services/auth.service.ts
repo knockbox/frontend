@@ -50,6 +50,14 @@ export class AuthService {
   }
 
   /**
+   * Logout the user
+   */
+  logout(): void {
+    this.tokenService.logout();
+    this.setLoggedIn(false);
+  }
+
+  /**
    * Get the username from the token.
    */
   getUsername(): string | null {

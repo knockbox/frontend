@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {EventsService} from "../../services/events.service";
 import {EventResponse} from "../../lib/responses";
 import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorHandler} from "../../lib/errors";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-events',
@@ -18,7 +21,10 @@ import {RouterLink, RouterOutlet} from "@angular/router";
 export class EventsComponent implements OnInit {
   events?: EventResponse[]
 
-  constructor(private eventsService: EventsService) {
+  constructor(
+    private authService: AuthService,
+    private eventsService: EventsService
+  ) {
   }
 
   ngOnInit() {
@@ -33,7 +39,6 @@ export class EventsComponent implements OnInit {
   }
 
   private onAllEventsError(err: Error): void {
-    console.log(err);
-    alert("Failed to get all events");
+    new ErrorHandler(this.authService).processErrorResponse(err)
   }
 }

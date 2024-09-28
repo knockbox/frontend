@@ -1,4 +1,5 @@
 <div *ngIf="event">
+  <!-- Event -->
   <ul class="border">
     <li>{{ event.activity_id }}</li>
     <li>{{ event.name }}</li>
@@ -6,5 +7,6 @@
     <li>{{ event.ends_at }}</li>
     <li>Private: {{ event.private }}</li>
     <a href="events">Back</a>
+    <a [routerLink]="['edit']" *ngIf="isEventOrganizer()">Edit</a>
   </ul>
 </div>
