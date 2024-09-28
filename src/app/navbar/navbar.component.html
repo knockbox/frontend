@@ -1,22 +1,27 @@
 <nav>
-  <ul>
-    <li>
-      <a [routerLink]="['/']">Home</a>
-    </li>
-    <li>
-      <a [routerLink]="['/events']">Events</a>
-    </li>
-  </ul>
+    <ul>
+        <li>
+            <a [routerLink]="['/']">Home</a>
+        </li>
+        <li>
+            <a [routerLink]="['/events']">Events</a>
+        </li>
+    </ul>
 
-  <ul>
-    <li>
-      <a [routerLink]="['/register']">Register</a>
-    </li>
-    <li>
-      <a [routerLink]="['/login']">Login</a>
-    </li>
-    <li>
-      <a [routerLink]="['/logout']">Logout</a>
-    </li>
-  </ul>
+    <!-- Not Logged In -->
+    <ul *ngIf="!(authService.isLoggedIn | async)">
+        <li>
+            <a [routerLink]="['/register']">Register</a>
+        </li>
+        <li>
+            <a [routerLink]="['/login']">Login</a>
+        </li>
+    </ul>
+
+    <!-- Logged In -->
+    <ul *ngIf="authService.isLoggedIn | async">
+        <li>
+            <a href="" (click)="onLogout()">Logout</a>
+        </li>
+    </ul>
 </nav>

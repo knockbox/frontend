@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type {Config} from 'tailwindcss'
 
 export default {
   content: [
@@ -8,5 +8,9 @@ export default {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    // Contains all styles that will be compiled regardless
+    // Fixes issues where conditional styles are removed.
+  ]
 } satisfies Config
 
