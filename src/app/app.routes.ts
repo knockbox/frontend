@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import {IndexComponent} from "./index/index.component";
-import {RegisterComponent} from "./register/register.component";
-import {EventsComponent} from "./events/events.component";
-import {LoginComponent} from "./login/login.component";
+import {IndexComponent} from "./components/index/index.component";
+import {RegisterComponent} from "./components/register/register.component";
+import {EventsComponent} from "./components/events/events.component";
+import {LoginComponent} from "./components/login/login.component";
 import {tokenGuard} from "./guards/token.guard";
 
 export const routes: Routes = [

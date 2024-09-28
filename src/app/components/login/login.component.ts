@@ -1,9 +1,9 @@
 import {Component, input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-import {TokenResponse} from "../lib/responses";
-import {TokenService} from "../services/token.service";
+import {TokenResponse} from "../../lib/responses";
+import {TokenService} from "../../services/token.service";
 
 @Component({
   selector: 'app-login',

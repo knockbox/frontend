@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {AuthService} from "../services/auth.service";
-import {TokenService} from "../services/token.service";
+import {AuthService} from "../../services/auth.service";
+import {TokenService} from "../../services/token.service";
 import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
