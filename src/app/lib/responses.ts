@@ -21,3 +21,10 @@ export interface FlagResponse {
   difficulty: string;
   env_var: string;
 }
+
+export interface ParticipantResponse {
+  participant_id: string;
+  status: string;
+  can_invite: boolean;
+  can_manage: boolean;
+}

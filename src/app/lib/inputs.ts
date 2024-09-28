@@ -55,4 +55,11 @@ export interface FlagCreateInput {
   env_var: string;
 }
 
-export interface FlagUpdateInput extends FlagCreateInput {}
+export interface FlagUpdateInput extends FlagCreateInput {
+}
+
+export interface ParticipantInput {
+  status: string;
+  can_invite: boolean;
+  can_manage: boolean;
+}
