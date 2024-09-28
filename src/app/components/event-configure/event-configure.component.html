@@ -91,5 +91,8 @@
 
   </div>
 
-  <button type="submit" [disabled]="!form.valid">Submit</button>
+  <div>
+    <a [routerLink]="['..']">Back</a>
+    <button type="submit" [disabled]="!form.valid">Submit</button>
+  </div>
 </form>

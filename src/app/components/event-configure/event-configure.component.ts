@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {EventResponse} from "../../lib/responses";
 import {ErrorHandler} from "../../lib/errors";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {EventsService} from "../../services/events.service";
 import {AuthService} from "../../services/auth.service";
 import {JsonPipe, NgForOf, NgIf} from "@angular/common";
@@ -16,7 +16,8 @@ import {HttpErrorResponse} from "@angular/common/http";
     NgIf,
     ReactiveFormsModule,
     NgForOf,
-    JsonPipe
+    JsonPipe,
+    RouterLink
   ],
   templateUrl: './event-configure.component.html',
   styleUrl: './event-configure.component.scss'
