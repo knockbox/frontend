@@ -5,18 +5,91 @@
 
     <!-- Container -->
     <div *ngFor="let container of containers.controls; let i = index">
-      <div [formGroupName]="i">
+      <div [formGroupName]="i" class="border">
+        <!-- Image -->
         <label for="image">DockerHub Image</label>
         <input type="text" id="image" formControlName="image">
-        <button (click)="removeContainer(i)" *ngIf="containers.controls.length > 1">Remove Container</button>
+
+        <!-- Essential -->
+        <label for="essential">Essential</label>
+        <input type="checkbox" id="essential" formControlName="essential">
+
+        <button (click)="removeContainer(i)" type="button" *ngIf="containers.controls.length > 1">Remove Container
+        </button>
+
+        <!-- Env Vars -->
+        <div formArrayName="env">
+
+          <!-- Env Var -->
+          <div *ngFor="let env of containerEnvs(i).controls; let j = index">
+            <div [formGroupName]="j">
+              <label for="key">Key</label>
+              <input type="text" id="key" formControlName="key">
+
+              <label for="value">Value</label>
+              <input type="text" id="value" formControlName="value">
+
+              <button (click)="removeContainerEnv(i, j)" type="button">Remove</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Ports -->
+        <div formArrayName="ports">
+
+          <!-- Port -->
+          <div *ngFor="let port of containerPorts(i).controls; let j = index">
+            <div [formGroupName]="j">
+              <label for="container_port">Container Port</label>
+              <input type="number" id="container_port" formControlName="container_port">
+
+              <label for="name">Name</label>
+              <input type="text" id="name" formControlName="name">
+
+              <button (click)="removeContainerPort(i, j)" type="button">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Volumes -->
+        <div formArrayName="volumes">
+
+          <!-- Volume -->
+          <div *ngFor="let volume of containerVolumes(i).controls; let j = index">
+            <div [formGroupName]="j">
+              <label for="path">Path</label>
+              <input type="text" id="path" formControlName="path">
+
+              <label for="source">Source</label>
+              <select formControlName="source" id="source">
+                <option value="efs">Elastic File System (EFS)</option>
+              </select>
+
+              <label for="read_only">Read-Only</label>
+              <input type="checkbox" id="read_only" formControlName="read_only">
+
+              <button (click)="removeContainerVolume(i, j)" type="button">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Buttons -->
+        <div>
+          <button (click)="addContainerEnv(i)" type="button">Add Env Var</button>
+          <button (click)="addContainerPort(i)" type="button">Add Port</button>
+          <button (click)="addContainerVolume(i)" type="button">Add Volume</button>
+        </div>
+
       </div>
     </div>
 
+    <!-- Add Container -->
     <div>
-      <button (click)="addContainer()">Add Container</button>
+      <button (click)="addContainer()" type="button">Add Container</button>
     </div>
 
   </div>
 
-  <button type="submit">Submit</button>
+  <button type="submit" [disabled]="!form.valid">Submit</button>
 </form>

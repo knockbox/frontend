@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {EventResponse} from "../lib/responses";
 import {environment} from "../../environments/environment";
-import {EventCreateInput} from "../lib/inputs";
+import {EventConfigureInput, EventCreateInput} from "../lib/inputs";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,16 @@ export class EventsService {
    */
   createEvent(input: EventCreateInput): Observable<void> {
     const endpoint = `${environment.matchboxApiUrl}/events`;
+    return this.http.post<void>(endpoint, input);
+  }
+
+  /**
+   * Configure an Event.
+   * @param activity_id the activity_id of the event
+   * @param input
+   */
+  configureEvent(activity_id: string, input: EventConfigureInput): Observable<void> {
+    const endpoint = `${environment.matchboxApiUrl}/events/${activity_id}/task`;
     return this.http.post<void>(endpoint, input);
   }
 }

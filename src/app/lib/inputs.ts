@@ -18,3 +18,34 @@ export interface EventCreateInput {
   image_tag: string;
   private: boolean;
 }
+
+export interface EventConfigureInput {
+  containers: EventConfigureContainer[];
+  cpu: string;
+  memory: string;
+}
+
+export interface EventConfigureContainer {
+  env: EventConfigureContainerVariable[];
+  ports: EventConfigureContainerPort[];
+  volumes: EventConfigureContainerVolume[];
+  image: string;
+  essential: boolean;
+}
+
+export interface EventConfigureContainerVariable {
+  key: string;
+  value: string;
+}
+
+export interface EventConfigureContainerPort {
+  container_port: number;
+  name: string;
+  protocol: string;
+}
+
+export interface EventConfigureContainerVolume {
+  path: string;
+  read_only: boolean;
+  source: string;
+}
