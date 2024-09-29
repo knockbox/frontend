@@ -10,6 +10,7 @@ import {ParticipantsComponent} from "../participants/participants.component";
 import {ParticipantService} from "../../services/participant.service";
 import {ParticipantInput} from "../../lib/inputs";
 import {BehaviorSubject, Observable, of} from "rxjs";
+import {ActivityComponent} from "../activity/activity.component";
 
 @Component({
   selector: 'app-event-details',
@@ -21,7 +22,8 @@ import {BehaviorSubject, Observable, of} from "rxjs";
     FlagDetailsComponent,
     RouterOutlet,
     ParticipantsComponent,
-    AsyncPipe
+    AsyncPipe,
+    ActivityComponent
   ],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.scss'

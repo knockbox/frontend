@@ -1,0 +1,47 @@
+<div class="p-4">
+
+  <!-- Activity Header -->
+  <header>
+
+    <div class="flex items-center gap-4 justify-between">
+      <div class="flex items-center gap-4">
+        <h1 class="text-3xl">{{ event.name }}</h1>
+        <div>
+          <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white" *ngIf="event.private">Private</sub>
+          <sub class="text-xs rounded-xl bg-yellow-400 px-1.5 text-white" *ngIf="!event.private">Public</sub>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <a [routerLink]="['configure']" *ngIf="isEventOrganizer">
+          <button class="text-xs rounded-xl bg-blue-600 px-1.5 text-white">Configure</button>
+        </a>
+<!--        <button *ngIf="isParticipant$ | async" class="text-xs rounded-xl bg-sky-500 px-1.5 text-white">Join Event</button>-->
+      </div>
+    </div>
+
+    <div class="text-xs py-2">
+      {{ event.starts_at | date:'medium' }} - {{ event.ends_at | date:'medium' }}
+    </div>
+
+    <hr>
+
+    <sub class="text-xs">{{ event.activity_id }}</sub>
+  </header>
+
+  <main class="py-8">
+    <p>
+      The event details should go here
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at atque culpa dolor dolorem ducimus eius error eveniet facere id impedit laborum, minus nesciunt nihil nostrum possimus, saepe? Dolores, nulla!
+    </p>
+    <br>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
+    </p>
+    <br>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
+    </p>
+  </main>
+
+</div>

@@ -9,7 +9,7 @@
     <div *ngFor="let event of events" class="">
 
       <!-- Link to Event -->
-      <a [routerLink]="[event.activity_id]" class="flex flex-col border rounded-md p-2 items-center gap-4">
+      <a [routerLink]="[event.activity_id]" class="flex flex-col border rounded-md p-2 items-center gap-4 hover:bg-neutral-50">
         <!-- Header -->
         <div>
           <h1>{{ event.name }}</h1>
