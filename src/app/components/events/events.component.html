@@ -1,7 +1,9 @@
 <div class="flex flex-col gap-y-2 p-2">
-  <a [routerLink]="['create']" class="flex justify-center">
-    <button class="p-1 bg-blue-500 text-neutral-200 rounded-md">Create Event</button>
-  </a>
+  <div class="flex w-full justify-center">
+    <a [routerLink]="['create']" class="">
+      <button class="p-1 bg-blue-500 text-neutral-200 rounded-md">Create Event</button>
+    </a>
+  </div>
 
   <div class="flex flex-row gap-3 justify-evenly">
     <div *ngFor="let event of events" class="">

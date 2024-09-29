@@ -28,3 +28,9 @@ export interface ParticipantResponse {
   can_invite: boolean;
   can_manage: boolean;
 }
+
+export interface UserResponse {
+  account_id: string;
+  username: string;
+  role: string;
+}

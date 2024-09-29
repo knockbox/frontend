@@ -2,10 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
 import {EventsService} from "../../services/events.service";
 import {EventResponse} from "../../lib/responses";
-import {NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {AuthService} from "../../services/auth.service";
 import {ErrorHandler} from "../../lib/errors";
 import {FlagDetailsComponent} from "../flag-details/flag-details.component";
+import {ParticipantsComponent} from "../participants/participants.component";
+import {ParticipantService} from "../../services/participant.service";
+import {ParticipantInput} from "../../lib/inputs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-event-details',
@@ -15,7 +19,9 @@ import {FlagDetailsComponent} from "../flag-details/flag-details.component";
     NgIf,
     RouterLink,
     FlagDetailsComponent,
-    RouterOutlet
+    RouterOutlet,
+    ParticipantsComponent,
+    AsyncPipe
   ],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.scss'
@@ -23,10 +29,13 @@ import {FlagDetailsComponent} from "../flag-details/flag-details.component";
 export class EventDetailsComponent implements OnInit {
   event?: EventResponse
 
+  isParticipant$ = new BehaviorSubject<boolean>(false)
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private participantService: ParticipantService,
   ) {
   }
 
@@ -40,6 +49,16 @@ export class EventDetailsComponent implements OnInit {
 
   private onEventSuccess(event: EventResponse): void {
     this.event = event;
+
+    this.participantService.getAllParticipants(event.activity_id).subscribe({
+      next: (participants) => {
+        if (!participants) return
+
+        const isParticipant = !!participants.find(p => p.participant_id === this.authService.getAccountId())
+        this.isParticipant$.next(!isParticipant && !this.isEventOrganizer() && !event.private)
+      },
+      error: console.error
+    })
   }
 
   private onEventError(err: Error): void {
@@ -51,5 +70,35 @@ export class EventDetailsComponent implements OnInit {
    */
   isEventOrganizer(): boolean {
     return this.event?.organizer_id == this.authService.getAccountId()
+  }
+
+  joinEvent(): void {
+    const account_id = this.authService.getAccountId();
+    if (!account_id) {
+      alert('Please login and try again')
+      return
+    }
+
+    if (!this.event) {
+      alert('This event does not exist')
+      return
+    }
+
+    const {activity_id} = this.event;
+    const input: ParticipantInput = {
+      status: 'member',
+      can_invite: false,
+      can_manage: false,
+    }
+
+    this.participantService.createParticipant(activity_id, account_id, input).subscribe({
+      next: () => {
+        alert('You have successfully join this event');
+      },
+      error: (err) => {
+        console.error(err)
+        alert('Failed to join event');
+      }
+    })
   }
 }

@@ -1,14 +1,25 @@
-<div *ngIf="event">
-  <!-- Event -->
-  <ul class="border">
-    <li>{{ event.activity_id }}</li>
-    <li>{{ event.name }}</li>
-    <li>{{ event.starts_at }}</li>
-    <li>{{ event.ends_at }}</li>
-    <li>Private: {{ event.private }}</li>
-    <a href="events">Back</a>
-    <a [routerLink]="['configure']" *ngIf="isEventOrganizer()">Configure</a>
-  </ul>
+<div *ngIf="event" class="flex">
+
+  <div>
+    <!-- Event -->
+    <ul class="border">
+      <li>{{ event.activity_id }}</li>
+      <li>{{ event.name }}</li>
+      <li>{{ event.starts_at }}</li>
+      <li>{{ event.ends_at }}</li>
+      <li>Private: {{ event.private }}</li>
+
+      <div class="flex gap-x-2">
+        <a href="events">Back</a>
+        <a [routerLink]="['configure']" *ngIf="isEventOrganizer()">Configure</a>
+        <button *ngIf="isParticipant$ | async" (click)="joinEvent()" disabled>Join</button>
+      </div>
+    </ul>
+  </div>
+
+
 </div>
 
 <app-flag-details *ngIf="event && isEventOrganizer()" [event]="event"></app-flag-details>
+
+<app-participants *ngIf="event && isEventOrganizer()" [event]="event"></app-participants>
