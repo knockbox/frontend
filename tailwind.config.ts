@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")
+  ],
   safelist: [
     // Contains all styles that will be compiled regardless
     // Fixes issues where conditional styles are removed.

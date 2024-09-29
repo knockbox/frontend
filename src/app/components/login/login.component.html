@@ -1,27 +1,33 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <!-- Username -->
-  <div>
-    <label for="username">Username</label>
-    <input
-      type="text"
-      id="username"
-      formControlName="username"
-    >
-  </div>
+<div class="flex justify-center py-8">
 
-  <!-- Password -->
-  <div>
-    <label for="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      formControlName="password"
-    >
-  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-96">
+    <!-- Username -->
+    <div class="flex flex-col">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        class="form-input"
+      >
+    </div>
 
-  <!-- Login -->
-  <div>
-    <a href="/register">Register</a>
-    <button type="submit" [disabled]="!form.valid">Login</button>
-  </div>
-</form>
+    <!-- Password -->
+    <div class="flex flex-col">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+      >
+    </div>
+
+    <!-- Login -->
+    <div class="flex justify-between text-center">
+      <a href="/register" class="rounded border p-2 w-3/12 bg-neutral-200">Register</a>
+      <button type="submit" [disabled]="!form.valid" class="rounded border p-2 w-3/12 bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-500 text-white">Login</button>
+    </div>
+  </form>
+
+</div>
+
