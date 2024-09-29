@@ -1,30 +1,34 @@
-<nav>
-    <ul>
-        <li>
-            <a [routerLink]="['/']">Home</a>
-        </li>
-        <li>
-            <a [routerLink]="['/events']">Events</a>
-        </li>
+<nav class="flex justify-between m-2 p-4 border-b">
+  <div>
+    <ul class="flex gap-x-8">
+      <li>
+        <a [routerLink]="['/']">Home</a>
+      </li>
+      <li>
+        <a [routerLink]="['/events']">Events</a>
+      </li>
     </ul>
+  </div>
 
+  <div>
     <!-- Not Logged In -->
-    <ul *ngIf="!(authService.isLoggedIn | async)">
-        <li>
-            <a [routerLink]="['/register']">Register</a>
-        </li>
-        <li>
-            <a [routerLink]="['/login']">Login</a>
-        </li>
+    <ul *ngIf="!(authService.isLoggedIn | async)" class="flex gap-x-8">
+      <li>
+        <a [routerLink]="['/register']">Register</a>
+      </li>
+      <li>
+        <a [routerLink]="['/login']">Login</a>
+      </li>
     </ul>
 
     <!-- Logged In -->
-    <ul *ngIf="authService.isLoggedIn | async">
+    <ul *ngIf="authService.isLoggedIn | async" class="flex gap-x-8">
       <li>
         {{authService.getUsername()}}
       </li>
-        <li>
-            <a href="" (click)="onLogout()">Logout</a>
-        </li>
+      <li>
+        <a href="" (click)="onLogout()">Logout</a>
+      </li>
     </ul>
+  </div>
 </nav>

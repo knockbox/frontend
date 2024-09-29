@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {EventsService} from "../../services/events.service";
 import {EventResponse} from "../../lib/responses";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorHandler} from "../../lib/errors";
@@ -13,7 +13,8 @@ import {AuthService} from "../../services/auth.service";
   imports: [
     NgIf,
     NgForOf,
-    RouterLink
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'

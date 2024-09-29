@@ -1,18 +1,37 @@
-<div>
-  <a [routerLink]="['create']">Create Event</a>
+<div class="flex flex-col gap-y-2 p-2">
+  <a [routerLink]="['create']" class="flex justify-center">
+    <button class="p-1 bg-blue-500 text-neutral-200 rounded-md">Create Event</button>
+  </a>
+
+  <div class="flex flex-row gap-3 justify-evenly">
+    <div *ngFor="let event of events" class="">
+
+      <!-- Link to Event -->
+      <a [routerLink]="[event.activity_id]" class="flex flex-col border rounded-md p-2 items-center gap-4">
+        <!-- Header -->
+        <div>
+          <h1>{{ event.name }}</h1>
+          <hr>
+        </div>
+
+        <!-- Times -->
+        <div>
+          <h2 class="text-xs">Starts at: {{ event.starts_at | date:'medium' }}</h2>
+          <h2 class="text-xs">Ends at: {{ event.ends_at | date:'medium' }}</h2>
+        </div>
+
+        <!-- Activity Id -->
+        <div class="flex flex-col items-center">
+          <hr class="w-full">
+          <sub class="text-xs">{{ event.activity_id }}</sub>
+          <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white" *ngIf="event.private">Private</sub>
+          <sub class="text-xs rounded-xl bg-yellow-400 px-1.5 text-white" *ngIf="!event.private">Public</sub>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
 </div>
-<div *ngIf="events">
-  <ul>
-    <li *ngFor="let event of events" class="border">
-      <ul>
-        <li>{{event.activity_id}}</li>
-        <li>{{event.name}}</li>
-        <li>{{event.starts_at}}</li>
-        <li>{{event.ends_at}}</li>
-        <li>Private: {{event.private}}</li>
-        <a [routerLink]="[event.activity_id]">View</a>
-<!--        <a [routerLink]="['events', event.activity_id]" *ngIf="!event.private">Join</a>-->
-      </ul>
-    </li>
-  </ul>
-</div>
+
+
