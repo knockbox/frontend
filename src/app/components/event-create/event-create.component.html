@@ -1,77 +1,85 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <!-- Name -->
-  <div>
-    <label for="name">Name</label>
-    <input
-      type="text"
-      id="name"
-      formControlName="name"
-    >
-  </div>
+<div class="flex flex-col items-center py-8">
 
-  <!-- Starts At -->
-  <div>
-    <label for="starts_at">Starts At</label>
-    <input
-      type="datetime-local"
-      id="starts_at"
-      formControlName="starts_at"
-    >
-  </div>
+  <h1 class="text-3xl">Event Creation</h1>
 
-  <!-- Ends At -->
-  <div>
-    <label for="ends_at">Ends At</label>
-    <input
-      type="datetime-local"
-      id="ends_at"
-      formControlName="ends_at"
-    >
-  </div>
 
-  <!-- Image Namespace -->
-  <div>
-    <label for="image_namespace">Image Namespace</label>
-    <input
-      type="text"
-      id="image_namespace"
-      formControlName="image_namespace"
-    >
-  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-8 w-96">
+    <!-- Name -->
+    <div class="flex flex-col">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+      >
+    </div>
 
-  <!-- Image Repository -->
-  <div>
-    <label for="image_repository">Image Repository</label>
-    <input
-      type="text"
-      id="image_repository"
-      formControlName="image_repository"
-    >
-  </div>
+    <!-- Starts At -->
+    <div class="flex flex-col">
+      <label for="starts_at">Starts At</label>
+      <input
+        type="datetime-local"
+        id="starts_at"
+        formControlName="starts_at"
+      >
+    </div>
 
-  <!-- Image Tag -->
-  <div>
-    <label for="image_tag">Image Tag</label>
-    <input
-      type="text"
-      id="image_tag"
-      formControlName="image_tag"
-    >
-  </div>
+    <!-- Ends At -->
+    <div class="flex flex-col">
+      <label for="ends_at">Ends At</label>
+      <input
+        type="datetime-local"
+        id="ends_at"
+        formControlName="ends_at"
+      >
+    </div>
 
-  <!-- Private -->
-  <div>
-    <label for="private">Private</label>
-    <input
-      type="checkbox"
-      id="private"
-      formControlName="private"
-    >
-  </div>
+    <!-- Image Namespace -->
+    <div class="flex flex-col">
+      <label for="image_namespace">Image Namespace</label>
+      <input
+        type="text"
+        id="image_namespace"
+        formControlName="image_namespace"
+      >
+    </div>
 
-  <!-- Buttons -->
-  <div>
-    <a href="/events">Cancel</a>
-    <button type="submit" [disabled]="!form.valid">Create</button>
-  </div>
-</form>
+    <!-- Image Repository -->
+    <div class="flex flex-col">
+      <label for="image_repository">Image Repository</label>
+      <input
+        type="text"
+        id="image_repository"
+        formControlName="image_repository"
+      >
+    </div>
+
+    <!-- Image Tag -->
+    <div class="flex flex-col">
+      <label for="image_tag">Image Tag</label>
+      <input
+        type="text"
+        id="image_tag"
+        formControlName="image_tag"
+      >
+    </div>
+
+    <!-- Private -->
+    <div class="flex flex-row items-center justify-between">
+      <label for="private">Private</label>
+      <input
+        type="checkbox"
+        id="private"
+        formControlName="private"
+      >
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between text-center">
+      <a href="/events" class="rounded border p-2 w-3/12 bg-neutral-200">Cancel</a>
+      <button type="submit" [disabled]="!form.valid" class="rounded border p-2 w-3/12 bg-emerald-600 hover:bg-emerald-700 disabled:bg-neutral-500 text-white">Create</button>
+    </div>
+  </form>
+
+</div>
+

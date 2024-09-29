@@ -89,7 +89,7 @@
         <button
           class="text-xs rounded-xl bg-blue-600 px-1.5 text-white disabled:bg-blue-200"
           (click)="startTask()"
-          [disabled]="task?.public_ip || !task?.stopped_reason"
+          [disabled]="task?.public_ip"
         >Start Task
         </button>
         <button
@@ -120,12 +120,16 @@
 
       <!-- Capture -->
       <form [formGroup]="captureForm" class="flex gap-5 py-2" *ngIf="isParticipant$ | async" (ngSubmit)="captureFlag()">
-        <label for="flag">Capture Flag</label>
-        <input type="text" id="flag" placeholder="flag id" formControlName="id">
+
+        <div class="flex gap-2 items-center">
+          <label for="flag">Capture Flag</label>
+          <input type="text" id="flag" placeholder="flag id" formControlName="id">
+        </div>
+
 
         <button type="submit" [disabled]="!captureForm.valid" class="">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-               stroke="currentColor" class="size-4">
+               stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round"
                   d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
           </svg>
@@ -140,6 +144,10 @@
           <th>User</th>
           <th>Score</th>
         </tr>
+
+      <tr *ngIf="!history.length">
+        <td colspan="2">No Scores Found</td>
+      </tr>
 
         <tr *ngFor="let record of history">
           <td>{{getUserForHistory(record).username}}</td>

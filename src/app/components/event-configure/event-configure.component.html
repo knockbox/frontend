@@ -1,98 +1,131 @@
-<form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()">
+<div class="flex flex-col items-center justify-center py-12 gap-8">
 
-  <!-- Containers -->
-  <div formArrayName="containers">
+  <h1 class="text-3xl">Event Configuration</h1>
 
-    <!-- Container -->
-    <div *ngFor="let container of containers.controls; let i = index">
-      <div [formGroupName]="i" class="border">
-        <!-- Image -->
-        <label for="image">DockerHub Image</label>
-        <input type="text" id="image" formControlName="image">
+  <form [formGroup]="form" *ngIf="form" (ngSubmit)="onSubmit()" class="flex flex-col w-8/12 justify-center">
 
-        <!-- Essential -->
-        <label for="essential">Essential</label>
-        <input type="checkbox" id="essential" formControlName="essential">
+    <!-- Containers -->
+    <div formArrayName="containers">
 
-        <button (click)="removeContainer(i)" type="button" *ngIf="containers.controls.length > 1">Remove Container
-        </button>
+      <!-- Container -->
+      <div *ngFor="let container of containers.controls; let i = index" class="gap-4">
+        <div [formGroupName]="i">
 
-        <!-- Env Vars -->
-        <div formArrayName="env">
+          <!-- Image -->
+          <div class="flex flex-col gap-2">
+            <!-- Image -->
+            <label for="image" class="p-2">DockerHub Image</label>
+            <input type="text" id="image" formControlName="image">
 
-          <!-- Env Var -->
-          <div *ngFor="let env of containerEnvs(i).controls; let j = index">
-            <div [formGroupName]="j">
-              <label for="key">Key</label>
-              <input type="text" id="key" formControlName="key">
-
-              <label for="value">Value</label>
-              <input type="text" id="value" formControlName="value">
-
-              <button (click)="removeContainerEnv(i, j)" type="button">Remove</button>
+            <div class="flex justify-between">
+              <!-- Essential -->
+              <label for="essential">Essential</label>
+              <input type="checkbox" id="essential" formControlName="essential">
             </div>
 
+            <button
+              (click)="removeContainer(i)"
+              type="button"
+              *ngIf="containers.controls.length > 1"
+              class="text-sm"
+            >Remove Container
+            </button>
+
           </div>
-        </div>
 
-        <!-- Ports -->
-        <div formArrayName="ports">
+          <!-- Env Vars -->
+          <div formArrayName="env" class="w-10/12 gap-2">
 
-          <!-- Port -->
-          <div *ngFor="let port of containerPorts(i).controls; let j = index">
-            <div [formGroupName]="j">
-              <label for="container_port">Container Port</label>
-              <input type="number" id="container_port" formControlName="container_port">
+            <!-- Env Var -->
+            <div *ngFor="let env of containerEnvs(i).controls; let j = index">
+              <div [formGroupName]="j">
 
-              <label for="name">Name</label>
-              <input type="text" id="name" formControlName="name">
+                <div class="flex flex-col gap-2">
+                  <label for="key">Key</label>
+                  <input type="text" id="key" formControlName="key">
 
-              <button (click)="removeContainerPort(i, j)" type="button">Remove</button>
+                  <label for="value">Value</label>
+                  <input type="text" id="value" formControlName="value">
+
+                  <button (click)="removeContainerEnv(i, j)" type="button" class="text-sm">Remove Env Var</button>
+                </div>
+
+              </div>
+
             </div>
           </div>
-        </div>
 
-        <!-- Volumes -->
-        <div formArrayName="volumes">
+          <!-- Ports -->
+          <div formArrayName="ports" class="w-10/12">
 
-          <!-- Volume -->
-          <div *ngFor="let volume of containerVolumes(i).controls; let j = index">
-            <div [formGroupName]="j">
-              <label for="path">Path</label>
-              <input type="text" id="path" formControlName="path">
+            <!-- Port -->
+            <div *ngFor="let port of containerPorts(i).controls; let j = index">
+              <div [formGroupName]="j">
 
-              <label for="source">Source</label>
-              <select formControlName="source" id="source">
-                <option value="efs">Elastic File System (EFS)</option>
-              </select>
+                <div class="flex flex-col gap-2">
+                  <label for="container_port">Container Port</label>
+                  <input type="number" id="container_port" formControlName="container_port">
 
-              <label for="read_only">Read-Only</label>
-              <input type="checkbox" id="read_only" formControlName="read_only">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" formControlName="name">
 
-              <button (click)="removeContainerVolume(i, j)" type="button">Remove</button>
+                  <button (click)="removeContainerPort(i, j)" type="button" class="text-sm">Remove Port</button>
+                </div>
+
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Add Buttons -->
-        <div>
-          <button (click)="addContainerEnv(i)" type="button">Add Env Var</button>
-          <button (click)="addContainerPort(i)" type="button">Add Port</button>
-          <button (click)="addContainerVolume(i)" type="button">Add Volume</button>
-        </div>
+          <!-- Volumes -->
+          <div formArrayName="volumes" class="w-10/12">
 
+            <!-- Volume -->
+            <div *ngFor="let volume of containerVolumes(i).controls; let j = index">
+              <div [formGroupName]="j">
+
+                <div class="flex flex-col gap-2">
+                  <label for="path">Path</label>
+                  <input type="text" id="path" formControlName="path">
+
+                  <label for="source">Source</label>
+                  <select formControlName="source" id="source">
+                    <option value="efs">Elastic File System (EFS)</option>
+                  </select>
+
+                  <div class="flex justify-between">
+                    <label for="read_only">Read-Only</label>
+                    <input type="checkbox" id="read_only" formControlName="read_only">
+                  </div>
+
+                  <button (click)="removeContainerVolume(i, j)" type="button" class="text-sm">Remove Volume</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Buttons -->
+          <div class="flex justify-evenly text-xs py-8">
+            <button (click)="addContainerEnv(i)" type="button" class="p-0.5 text-xs">Add Env Var</button>
+            <button (click)="addContainerPort(i)" type="button">Add Port</button>
+            <button (click)="addContainerVolume(i)" type="button">Add Volume</button>
+          </div>
+
+        </div>
       </div>
+
+      <!-- Add Container -->
+      <div class="text-sm text-center">
+        <button (click)="addContainer()" type="button">Add Container</button>
+      </div>
+
     </div>
 
-    <!-- Add Container -->
-    <div>
-      <button (click)="addContainer()" type="button">Add Container</button>
+    <div class="flex justify-between py-4 text-center">
+      <a [routerLink]="['..']" class="rounded border p-2 w-3/12 bg-neutral-200">Back</a>
+      <button type="submit" [disabled]="!form.valid" class="rounded border p-2 w-3/12 bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-500 text-white">Submit</button>
     </div>
+  </form>
 
-  </div>
+</div>
 
-  <div>
-    <a [routerLink]="['..']">Back</a>
-    <button type="submit" [disabled]="!form.valid">Submit</button>
-  </div>
-</form>
