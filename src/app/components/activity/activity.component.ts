@@ -1,11 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EventResponse, TaskResponse} from "../../lib/responses";
-import {AsyncPipe, DatePipe, NgIf} from "@angular/common";
-import {BehaviorSubject, skip} from "rxjs";
+import {EventResponse, FlagHistoryResponse, TaskResponse, UserResponse} from "../../lib/responses";
+import {AsyncPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
+import {BehaviorSubject, catchError, combineLatest, max, min, of, skip} from "rxjs";
 import {RouterLink} from "@angular/router";
 import {TaskService} from "../../services/task.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CdkCopyToClipboard, Clipboard} from '@angular/cdk/clipboard';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {EventsService} from "../../services/events.service";
+import {FlagsService} from "../../services/flags.service";
+import {ParticipantService} from "../../services/participant.service";
+import {UsersService} from "../../services/users.service";
 
 @Component({
   selector: 'app-activity',
@@ -15,7 +20,9 @@ import {CdkCopyToClipboard, Clipboard} from '@angular/cdk/clipboard';
     DatePipe,
     AsyncPipe,
     RouterLink,
-    CdkCopyToClipboard
+    CdkCopyToClipboard,
+    ReactiveFormsModule,
+    NgForOf
   ],
   templateUrl: './activity.component.html',
   styleUrl: './activity.component.scss'
@@ -30,14 +37,34 @@ export class ActivityComponent implements OnInit {
   task?: TaskResponse;
   loading$ = new BehaviorSubject<boolean>(false);
 
+  history: FlagHistoryResponse[] = [];
+  users: UserResponse[] = [];
+
+  captureForm!: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
     private clipboard: Clipboard,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private eventsService: EventsService,
+    private flagService: FlagsService,
+    private usersService: UsersService,
   ) {
   }
 
   ngOnInit() {
+    this.captureForm = this.fb.group({
+      id: [
+        {
+          value: "",
+          disabled: false,
+        },
+        [Validators.required, Validators.minLength(1)]
+      ]
+    })
+
     this.getTask(true)
+    this.getFlagHistory()
   }
 
   copyIpAddress(ip: string) {
@@ -94,5 +121,61 @@ export class ActivityComponent implements OnInit {
       }
     })
   }
-}
 
+  isScoringActive(): boolean {
+    const now = Date.now()
+    const start = new Date(this.event.starts_at).valueOf()
+    const end = new Date(this.event.ends_at).valueOf()
+
+    return now >= start && now < end
+  }
+
+  captureFlag(): void {
+    const {id} = this.captureForm.value
+    const {activity_id} = this.event
+
+    this.eventsService.captureFlag(activity_id, id).subscribe({
+      error: (err) => {
+        if (err instanceof HttpErrorResponse) {
+          alert(err.error['error']);
+          return
+        }
+      },
+      complete: () => {
+        alert('Flag captured!');
+        this.captureForm.reset();
+      }
+    })
+  }
+
+  getFlagHistory(): void {
+    const {activity_id} = this.event
+
+    this.flagService.getAllFlagHistory(activity_id).subscribe({
+      next: (history) => {
+        this.history = history ? history : [];
+
+        const requests$ = this.history.map(r => this.usersService.getByAccountId(r.redeemer_id).pipe(catchError(() => of(null))))
+        combineLatest(requests$).subscribe({
+          next: (users) => {
+            this.users = users ? users.filter(u => u !== null) : [];
+          },
+          error: console.error,
+        })
+      },
+      error: console.error
+    })
+  }
+
+  getUserForHistory(history: FlagHistoryResponse): UserResponse {
+    return this.users.find(u => u.account_id === history.redeemer_id)!
+  }
+
+  getScoreForHistory(history: FlagHistoryResponse): number {
+    const end = new Date(this.event.ends_at).valueOf()
+    const at = new Date(history.timestamp).valueOf()
+    const score = Math.round((end-at) / 1000000);
+
+    return Math.max(score, 0)
+  }
+}

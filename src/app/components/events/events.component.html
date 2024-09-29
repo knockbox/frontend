@@ -5,13 +5,13 @@
     </a>
   </div>
 
-  <div class="flex flex-row gap-3 justify-evenly">
+  <div class="flex flex-wrap gap-3 justify-evenly">
     <div *ngFor="let event of events" class="">
 
       <!-- Link to Event -->
-      <a [routerLink]="[event.activity_id]" class="flex flex-col border rounded-md p-2 items-center gap-4 hover:bg-neutral-50">
+      <a [routerLink]="[event.activity_id]" class="flex flex-col border rounded-md p-4 items-center gap-4 hover:bg-neutral-50">
         <!-- Header -->
-        <div>
+        <div class="w-full text-center">
           <h1>{{ event.name }}</h1>
           <hr>
         </div>

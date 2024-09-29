@@ -48,3 +48,10 @@ export interface TaskResponse {
   instance_owner_id: string;
   public_ip: string;
 }
+
+export interface FlagHistoryResponse {
+  event_id: number;
+  flag_id: number;
+  timestamp: string;
+  redeemer_id: string;
+}

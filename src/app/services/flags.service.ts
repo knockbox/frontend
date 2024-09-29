@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {FlagResponse} from "../lib/responses";
+import {FlagHistoryResponse, FlagResponse} from "../lib/responses";
 import {environment} from "../../environments/environment";
 import {FlagCreateInput, FlagUpdateInput} from "../lib/inputs";
 
@@ -52,5 +52,12 @@ export class FlagsService {
     return this.http.get<FlagResponse[] | null>(endpoint);
   }
 
-
+  /**
+   * Returns all the history, if any exist, for the given event
+   * @param activity_id the activity_id of the event.
+   */
+  getAllFlagHistory(activity_id: string): Observable<FlagHistoryResponse[] | null> {
+    const endpoint = `${environment.matchboxApiUrl}/events/${activity_id}/flags/history`;
+    return this.http.get<FlagHistoryResponse[] | null>(endpoint);
+  }
 }

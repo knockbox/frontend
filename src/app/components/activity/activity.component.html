@@ -1,4 +1,4 @@
-<div class="p-4">
+<div class="p-4 flex flex-col gap-8">
 
   <!-- Activity Header -->
   <header>
@@ -30,7 +30,7 @@
   </header>
 
   <!-- Activity Details -->
-  <main class="py-8">
+  <main>
     <p>
       The event details should go here
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at atque culpa dolor dolorem ducimus eius error
@@ -101,6 +101,51 @@
         <!--        <button *ngIf="isParticipant$ | async" class="text-xs rounded-xl bg-sky-500 px-1.5 text-white">Join Event</button>-->
       </div>
     </div>
+
+  </section>
+
+  <!-- Scoring -->
+  <section class="flex flex-col gap-4">
+    <!-- Header -->
+    <div class="flex items-center gap-4 justify-between">
+
+      <!-- Scoring + Status -->
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl">Scoring</h1>
+        <div class="flex">
+          <sub class="text-xs rounded-xl bg-emerald-500 px-1.5 text-white" *ngIf="isScoringActive()">Active</sub>
+          <sub class="text-xs rounded-xl bg-neutral-500 px-1.5 text-white" *ngIf="!isScoringActive()">Inactive</sub>
+        </div>
+      </div>
+
+      <!-- Capture -->
+      <form [formGroup]="captureForm" class="flex gap-5 py-2" *ngIf="isParticipant$ | async" (ngSubmit)="captureFlag()">
+        <label for="flag">Capture Flag</label>
+        <input type="text" id="flag" placeholder="flag id" formControlName="id">
+
+        <button type="submit" [disabled]="!captureForm.valid" class="">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="size-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/>
+          </svg>
+        </button>
+      </form>
+
+    </div>
+
+
+    <table class="w-full text-left">
+        <tr>
+          <th>User</th>
+          <th>Score</th>
+        </tr>
+
+        <tr *ngFor="let record of history">
+          <td>{{getUserForHistory(record).username}}</td>
+          <td>{{getScoreForHistory(record)}}</td>
+        </tr>
+    </table>
 
   </section>
 </div>
