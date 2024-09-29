@@ -6,7 +6,7 @@
     <div class="flex items-center gap-4 justify-between">
       <div class="flex items-center gap-4">
         <h1 class="text-3xl">{{ event.name }}</h1>
-        <div>
+        <div class="flex">
           <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white" *ngIf="event.private">Private</sub>
           <sub class="text-xs rounded-xl bg-yellow-400 px-1.5 text-white" *ngIf="!event.private">Public</sub>
         </div>
@@ -16,7 +16,7 @@
         <a [routerLink]="['configure']" *ngIf="isEventOrganizer">
           <button class="text-xs rounded-xl bg-blue-600 px-1.5 text-white">Configure</button>
         </a>
-<!--        <button *ngIf="isParticipant$ | async" class="text-xs rounded-xl bg-sky-500 px-1.5 text-white">Join Event</button>-->
+        <!--        <button *ngIf="isParticipant$ | async" class="text-xs rounded-xl bg-sky-500 px-1.5 text-white">Join Event</button>-->
       </div>
     </div>
 
@@ -29,19 +29,78 @@
     <sub class="text-xs">{{ event.activity_id }}</sub>
   </header>
 
+  <!-- Activity Details -->
   <main class="py-8">
     <p>
       The event details should go here
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at atque culpa dolor dolorem ducimus eius error eveniet facere id impedit laborum, minus nesciunt nihil nostrum possimus, saepe? Dolores, nulla!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at atque culpa dolor dolorem ducimus eius error
+      eveniet facere id impedit laborum, minus nesciunt nihil nostrum possimus, saepe? Dolores, nulla!
     </p>
     <br>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam
+      velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
     </p>
     <br>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa deleniti dicta est et nam porro quaerat totam
+      velit! Ex nam quam quisquam tempore tenetur totam velit! Accusantium delectus iste quae!
     </p>
   </main>
 
+  <!-- Task -->
+  <section>
+    <div class="flex items-center gap-4 justify-between">
+
+      <!-- Instance Details Header -->
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl">Instance Details</h1>
+
+        <!-- Instance Status -->
+        <div class="flex gap-2">
+
+          <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white" *ngIf="!task">. . .</sub>
+
+          <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white"
+               *ngIf="task && !task.public_ip && !task.stopped_reason">Awaiting Ip. . .</sub>
+          <sub class="text-xs rounded-xl bg-neutral-600 px-1.5 text-white" *ngIf="task && task.stopped_reason">Task
+            Stopped</sub>
+
+          <sub class="text-xs rounded-xl bg-green-500 hover:bg-green-600 px-1.5 text-white cursor-pointer"
+               *ngIf="task && task.public_ip" (click)="copyIpAddress(task.public_ip)">{{ task.public_ip }}
+          </sub>
+
+          <sub>
+            <button (click)="getTask()" [class]="(loading$ | async) ? 'animate-spin' : ''">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                   stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+              </svg>
+            </button>
+          </sub>
+
+        </div>
+
+      </div>
+
+      <!-- Instance Controls -->
+      <div class="flex gap-2" *ngIf="isParticipant$ | async">
+        <button
+          class="text-xs rounded-xl bg-blue-600 px-1.5 text-white disabled:bg-blue-200"
+          (click)="startTask()"
+          [disabled]="task?.public_ip || !task?.stopped_reason"
+        >Start Task
+        </button>
+        <button
+          class="text-xs rounded-xl bg-red-500 px-1.5 text-white disabled:bg-red-200"
+          (click)="stopTask()"
+          [disabled]="!task?.public_ip || task?.stopped_reason"
+        >Stop Task
+        </button>
+        <!--        <button *ngIf="isParticipant$ | async" class="text-xs rounded-xl bg-sky-500 px-1.5 text-white">Join Event</button>-->
+      </div>
+    </div>
+
+  </section>
 </div>
