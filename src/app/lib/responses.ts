@@ -34,3 +34,17 @@ export interface UserResponse {
   username: string;
   role: string;
 }
+
+export interface TaskResponse {
+  aws_arn: string;
+  ecs_task_definition_id: number;
+  ecs_cluster_id: number;
+  pull_start: string;
+  pull_stop: string;
+  started_at: string;
+  stopped_at: string;
+  stopped_reason: string;
+  status: string;
+  instance_owner_id: string;
+  public_ip: string;
+}
