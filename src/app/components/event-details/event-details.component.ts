@@ -57,7 +57,7 @@ export class EventDetailsComponent implements OnInit {
         if (!participants) return
 
         const isParticipant = !!participants.find(p => p.participant_id === this.authService.getAccountId())
-        this.isParticipant$.next(!isParticipant && !this.isEventOrganizer() && !event.private)
+        this.isParticipant$.next(!isParticipant && !this.isEventOrganizer())
       },
       error: console.error
     })
