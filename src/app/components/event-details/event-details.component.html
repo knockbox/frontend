@@ -5,10 +5,10 @@
               (join)="joinEvent()"
 ></app-activity>
 
-<hr>
+<hr *ngIf="event && isEventOrganizer()">
 
 <app-flag-details *ngIf="event && isEventOrganizer()" [event]="event"></app-flag-details>
 
-<hr>
+<hr *ngIf="event && isEventOrganizer()">
 
 <app-participants *ngIf="event && isEventOrganizer()" [event]="event"></app-participants>

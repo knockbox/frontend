@@ -47,4 +47,14 @@ export class EventsService {
     const endpoint = `${environment.matchboxApiUrl}/events/${activity_id}/task`;
     return this.http.post<void>(endpoint, input);
   }
+
+  /**
+   * Capture a flag in an event
+   * @param activity_id the activity_id of the event
+   * @param flag_id the flag to capture
+   */
+  captureFlag(activity_id: string, flag_id: string): Observable<void> {
+    const endpoint = `${environment.matchboxApiUrl}/events/${activity_id}/capture/${flag_id}`;
+    return this.http.post<void>(endpoint, null);
+  }
 }

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {EventResponse, TaskResponse} from "../../lib/responses";
 import {AsyncPipe, DatePipe, NgIf} from "@angular/common";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, skip} from "rxjs";
 import {RouterLink} from "@angular/router";
 import {TaskService} from "../../services/task.service";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -37,7 +37,7 @@ export class ActivityComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTask()
+    this.getTask(true)
   }
 
   copyIpAddress(ip: string) {
@@ -70,7 +70,7 @@ export class ActivityComponent implements OnInit {
     })
   }
 
-  getTask(): void {
+  getTask(skipAlert: boolean = false): void {
     this.loading$.next(true)
 
     this.taskService.getTask(this.event.activity_id).subscribe({
@@ -79,7 +79,7 @@ export class ActivityComponent implements OnInit {
         this.loading$.next(false)
       },
       error: (err) => {
-        if (err instanceof HttpErrorResponse) {
+        if (err instanceof HttpErrorResponse && !skipAlert) {
           if (err.status === 403) {
             alert("You are not a member of this activity");
           } else if (err.error['error'] === "the task does not exist") {
